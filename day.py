@@ -32,7 +32,7 @@ if os.path.isfile('Daily reading file'):
      for line in f:
          minutesread.append (int (line))
 weeks= []
-                                   ###for I in range (1,5): ###this is calling 4 weeks worth of reading, we want to do one week at a time and read from each week. 
+                                   
 booksread=[]
 days=['Sunday: ','Monday: ','Tuesday: ','Wednesday: ','Thursday: ','Friday: ','Saturday: ']
 for day in days [len (minutesread): ]:
