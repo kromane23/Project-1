@@ -2,7 +2,7 @@ import os
 
 print ("Read Across America Reading Challenge")
 print ('Februrary 14 - March 27, 2022 ')
-print ('To be eleigible for a free ticket to Silverwood, Students must: \n ')
+print ('To be eligible for a free ticket to Silverwood, Students must: \n ')
 print ('\t' '1. Read 5 out of 7 days for 6 weeks'  )
 print ('\t' '2. K-2nd = 20 min/day 5 days/ week')
 print ('\t' '3. Record number of mninutes read and weekly totals on the calendar.')
@@ -30,7 +30,9 @@ minutesread= []
 if os.path.isfile('Daily reading file'):
      f=open('Daily reading file','r')
      for line in f:
-         minutesread.append (int (line))
+         line =line.strip()
+         if line.isnumeric():
+            minutesread.append (int (line))
 weeks= []
                                    
 booksread=[]
