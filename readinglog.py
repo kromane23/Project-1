@@ -1,5 +1,5 @@
 
-print ("Moran Prarie Reading Challenge")
+print ("Read Across America Reading Challenge")
 print ('Februrary 14 - March 27, 2022 ')
 print ('To be eleigible for a free ticket to Silverwood, Students must: \n ')
 print ('\t' '1. Read 5 out of 7 days for 6 weeks'  )
@@ -17,21 +17,44 @@ def sum (minutes):
         S= S+X
     return S    
 weeks= []
-###for I in range (1,5): ###this is calling 4 weeks worth of reading, we want to do one week at a time and read from each week. 
+                                   ###for I in range (1,5): ###this is calling 4 weeks worth of reading, we want to do one week at a time and read from each week. 
 minutesread= [] 
+booksread=[]
 days=['Sunday: ','Monday: ','Tuesday: ','Wednesday: ','Thursday: ','Friday: ','Saturday: ']
 for day in days:
-        n= input("Minutes Read "+ day) ## Loop through the days of the week Sunday- Saturday
+        n= input('When done type done '+'\n' "Minutes Read "+ day) ## Loop through the days of the week Sunday- Saturday
+        if n =="done":
+            break   ##? How do you open up on each day? ex. already put in Monday, how do you open up for Tuesday? 
         n = int(n)
+        books = input('What did you read?')
         minutesread.append (n) #append means take integer (n) and put it into the list
-##print ('Week '+ (str(I)), sum (minutesread))
+                                            ##print ('Week '+ (str(I)), sum (minutesread))
+        booksread.append (books)                                    
+
 weeks.append(sum(minutesread))
-f= open ('Harrison reading log.txt','w')
-f.write ('Week 1 Total Minutes: '+ str(sum(weeks))+'\t') #using an add sign brings the each item into the string. 
+print (str(books))
+
+f= open ('Books Read','w')
+for books in booksread:
+    f.write (books + '\n')
 f.close ()
-print ('Total Minutes ', sum(weeks))
+
+f= open ('Books Read', 'r')
+for book in f:
+    booksread.append (book)
+f.close ()
+
 f= open('Harrison reading log.txt','r')
-    
-    ### now we want to run the function, read from the file and add the total minutes to the file calculation each week. 
-    ### copy the function then write then close 
+for line in f:
+    weeks.append (int(line))
+f.close ()
+
+f= open ('Harrison reading log.txt','w')
+for week in weeks:
+    f.write (str(week) +"\n")
+f.close ()
+
+print ('Total Minutes Read this week: ', sum(minutesread))
+print ('Total Minutes Read: ', sum(weeks))
+
 
