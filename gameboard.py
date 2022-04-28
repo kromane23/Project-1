@@ -10,6 +10,7 @@ class WinnerDialog (QDialog):
         super (). __init__()
 
         self.setWindowTitle (winner + ' has won! ')
+        self.resize (300,100)
         
         qbtn = QDialogButtonBox.Ok | QDialogButtonBox.Cancel
         self.buttonBox = QDialogButtonBox (qbtn)
