@@ -1,8 +1,11 @@
 from calendar import TUESDAY
 import sys
+from turtle import onclick
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from readinglog import *
+
 
 class mainwindow(QWidget):
     def __init__(self, parent = None):
@@ -12,7 +15,6 @@ class mainwindow(QWidget):
         font = QFont()
         font.setFamily('Arial')
         font.setPointSize(10)
-        
 
         label = QLabel (self)
         label.setFont (font)
@@ -46,6 +48,8 @@ class mainwindow(QWidget):
 
         labels = ["Monday: ", "Tuesday: ","Wednesday: ","Thursday: ","Friday: ","Saturday: ","Sunday: "]
         self.txts = []
+        self.books =[]
+        self.pages =[]
         labelMove = 125
         txtMove = 125
 
@@ -56,15 +60,18 @@ class mainwindow(QWidget):
             label.move(5, labelMove)
             txt = QLineEdit(self)
             txt.resize (40,30)
+            txt.setText ("0")
             txt.move(150, txtMove)
             self.txts.append(txt)
             label.setFont(font)
             txt = QLineEdit(self)
             txt.resize (300,30)
             txt.move(300, txtMove)
+            self.books.append (txt)
             txt = QLineEdit(self)
             txt.resize (60,30)
             txt.move(700,txtMove)
+            self.pages.append (txt)
             labelMove = labelMove + 60
             txtMove = txtMove + 60
 
@@ -76,27 +83,57 @@ class mainwindow(QWidget):
         self.btn.move(690,575)
         self.btn.setText("Submit")
 
-        self.btn.clicked.connect(self.getminutes)
+        self.btn.clicked.connect(self.submitdata)
     
     def getminutes(self):
-        Monday= self.txts[0].text()
-        Tuesday= self.txts[1].text()
-        Wednesday=self.txts[2].text()
-        Thursday=self.txts[3].text()
-        Friday=self.txts[4].text()
-        Saturday=self.txts[5].text()
-        Sunday=self.txts[6].text()
+        self.Monday= self.txts[0].text()
+        self.Tuesday= self.txts[1].text()
+        self.Wednesday=self.txts[2].text()
+        self.Thursday=self.txts[3].text()
+        self.Friday=self.txts[4].text()
+        self.Saturday=self.txts[5].text()
+        self.Sunday=self.txts[6].text()
         
+    def getbooks (self):
+        self.monbooks= self.books [0].text()
+        self.tuesbooks= self.books [1].text ()
+        self.wedbooks= self.books [2].text ()
+        self.thursbooks= self.books [3].text ()
+        self.fribooks= self.books [4].text ()
+        self.satbooks = self.txts [5].text ()
+        self.sunbooks =self.txts [6].text ()
+    
+    def getpages (self):
+        self.monpages= self.pages [0].text()
+        self.tuespages= self.pages [1].text ()
+        self.wedpages= self.pages [2].text ()
+        self.thurspages= self.pages [3].text ()
+        self.fripages= self.pages [4].text ()
+        self.satpages = self.pages [5].text ()
+        self.sunpages =self.pages [6].text ()
 
-        print ('Mon:'+Monday+' Tues:  '+ Tuesday+' Wed:  '+ Wednesday+' Thurs: '+Thursday+' Friday: '+Friday+' Sat: '+Saturday+' Sun: '+Sunday)
+    def submitdata (self):
+        self.getminutes ()
+        self.getbooks ()
+        self.getpages()
+        print ('Mon:'+self.Monday+' Tues:  '+ self.Tuesday+' Wed:  '+ self.Wednesday+' Thurs: '+self.Thursday+' Friday: '+self.Friday+' Sat: '+self.Saturday+' Sun: '+self.Sunday)
 
+        minutesread = [int(self.Monday), int(self.Tuesday), int(self.Wednesday), int(self.Thursday), int(self.Friday), int(self.Saturday), int(self.Sunday)]
+        booksread =[self.monbooks,self.tuesbooks,self.wedbooks,self.thursbooks,self.fribooks,self.satbooks,self.sunbooks]
+        pagesread=[self.monpages, self.tuespages,self.wedpages,self.thurspages,self.fripages,self.satpages,self.sunpages]
+        rl=readinglog(booksread, minutesread,pagesread)
+        rl.savetofile ()
 
 
 def main():
     app = QApplication(sys.argv)
     w = mainwindow()
-    w.show ()
+    w.show ()           
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
     main()
+
+onclick()
+rl=readinglog(booksread, minutesread,pagesread)
+rl.savetofile
