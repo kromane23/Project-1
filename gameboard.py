@@ -18,7 +18,7 @@ class WinnerDialog (QDialog):
         self.buttonBox. rejected.connect (self.reject)
 
         self.layout = QVBoxLayout()
-        lbl= QLabel ("Congratulations "+ winner + ".New Game? ")
+        lbl= QLabel ("Congratulations "+ winner + " New Game? ")
         self.layout.addWidget (lbl)
         self.layout.addWidget (self.buttonBox)
         self.setLayout (self.layout)
