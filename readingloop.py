@@ -71,6 +71,7 @@ class mainwindow(QWidget):
             txt = QLineEdit(self)
             txt.resize (60,30)
             txt.move(700,txtMove)
+            txt.setText("0")
             self.pages.append (txt)
             labelMove = labelMove + 60
             txtMove = txtMove + 60
@@ -100,8 +101,8 @@ class mainwindow(QWidget):
         self.wedbooks= self.books [2].text ()
         self.thursbooks= self.books [3].text ()
         self.fribooks= self.books [4].text ()
-        self.satbooks = self.txts [5].text ()
-        self.sunbooks =self.txts [6].text ()
+        self.satbooks = self.books [5].text ()
+        self.sunbooks =self.books [6].text ()
     
     def getpages (self):
         self.monpages= self.pages [0].text()
@@ -116,11 +117,14 @@ class mainwindow(QWidget):
         self.getminutes ()
         self.getbooks ()
         self.getpages()
-        print ('Mon:'+self.Monday+' Tues:  '+ self.Tuesday+' Wed:  '+ self.Wednesday+' Thurs: '+self.Thursday+' Friday: '+self.Friday+' Sat: '+self.Saturday+' Sun: '+self.Sunday)
+        print ('minutes Mon:'+self.Monday+' Tues:  '+ self.Tuesday+' Wed:  '+ self.Wednesday+' Thurs: '+self.Thursday+' Friday: '+self.Friday+' Sat: '+self.Saturday+' Sun: '+self.Sunday) 
+        print ('titleMon:'+self.monbooks+' Tues:  '+ self.tuesbooks+' Wed:  '+ self.wedbooks+' Thurs: '+self.thursbooks+' Friday: '+self.fribooks+' Sat: '+self.satbooks+' Sun: '+self.sunbooks)
+        print ('pagesMon:'+self.monpages+' Tues:  '+ self.tuespages+' Wed:  '+ self.wedpages+' Thurs: '+self.thurspages+' Friday: '+self.fripages+' Sat: '+self.satpages+' Sun: '+self.sunpages)
+
 
         minutesread = [int(self.Monday), int(self.Tuesday), int(self.Wednesday), int(self.Thursday), int(self.Friday), int(self.Saturday), int(self.Sunday)]
-        booksread =[self.monbooks,self.tuesbooks,self.wedbooks,self.thursbooks,self.fribooks,self.satbooks,self.sunbooks]
-        pagesread=[self.monpages, self.tuespages,self.wedpages,self.thurspages,self.fripages,self.satpages,self.sunpages]
+        booksread =[(self.monbooks),(self.tuesbooks),(self.wedbooks),(self.thursbooks),(self.fribooks),(self.satbooks),(self.sunbooks)]
+        pagesread=[int(self.monpages), int(self.tuespages),int(self.wedpages),int(self.thurspages),int(self.fripages), int(self.satpages),int(self.sunpages)]
         rl=readinglog(booksread, minutesread,pagesread)
         rl.savetofile ()
 

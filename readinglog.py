@@ -37,6 +37,7 @@ class readinglog:
         self.booksread= booksread
         self.minutesread = minutesread
         self.pagesread = pagesread
+    
     def savetofile(self):
         f=open ("Reading Log", "a")
         f.write(str(self.booksread))
