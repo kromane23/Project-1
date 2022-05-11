@@ -45,9 +45,12 @@ class readinglog:
         weeks.append(sum(self.minutesread))
         
 
-        f= open ('Books Read','w')
+        f= open ('Books Read','a')
+        f.write ('\n ________ \n')
         for books in self.booksread:
-            f.write (books + '\n')
+            if len(books)>0:
+                f.write (books + '\n')
+        f.write (str(sum(self.minutesread)))
         f.close ()
 
         f= open ('Books Read', 'r')
@@ -55,10 +58,9 @@ class readinglog:
             self.booksread.append (book)
         f.close ()
 
-        ##f= open('Harrison reading log.txt','r')
-       ## for line in f:
-           ## weeks.append (int(line))
-       ## f.close ()
+        f=open ('Total Minutes Read', 'a')
+        f.write (str (sum(self.minutesread))+'\n') 
+        f.close ()
 
        ## f= open ('Harrison reading log.txt','w')
        ## for week in weeks:

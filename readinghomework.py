@@ -1,5 +1,6 @@
 from calendar import TUESDAY
 import sys
+import os
 from turtle import onclick
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -10,7 +11,7 @@ from readinglog import *
 class mainwindow(QWidget):
     def __init__(self, parent = None):
         super(mainwindow, self).__init__(parent)
-        self.resize(800,800)
+        self.resize(900,900)
         self.setWindowTitle("Read Across America Reading Log")
         font = QFont()
         font.setFamily('Arial')
@@ -29,10 +30,17 @@ class mainwindow(QWidget):
         label.setFont(font)
         label.setText('Minutes Read')
         label.move(150, 100)
+        summinutes=0
+
+        if os.path.exists ("Total Minutes Read"):
+            f=open ('Total Minutes Read', 'r')
+            for n in f:
+                summinutes= summinutes+int(n)
+
 
         label =QLabel(self)
         label.setFont(font)
-        label.setText('Total Minutes \nThis Week:')
+        label.setText('Total Minutes \nThis Week:'+str(summinutes))
         label.move(5, 575)
         
         label = QLabel(self)
@@ -60,7 +68,6 @@ class mainwindow(QWidget):
             label.move(5, labelMove)
             txt = QLineEdit(self)
             txt.resize (40,30)
-            txt.setText ("0")
             txt.move(150, txtMove)
             self.txts.append(txt)
             label.setFont(font)
@@ -71,20 +78,19 @@ class mainwindow(QWidget):
             txt = QLineEdit(self)
             txt.resize (60,30)
             txt.move(700,txtMove)
-            txt.setText("0")
             self.pages.append (txt)
             labelMove = labelMove + 60
             txtMove = txtMove + 60
 
-        txt= QLineEdit (self)
-        txt.resize (40,30)
-        txt.move (145,575)
+            # txt= QLineEdit (self)
+            # txt.resize (40,30)
+            # txt.move (145,575)
 
-        self.btn = QPushButton(self)
-        self.btn.move(690,575)
-        self.btn.setText("Submit")
+            self.btn = QPushButton(self)
+            self.btn.move(690,575)
+            self.btn.setText("Submit")
 
-        self.btn.clicked.connect(self.submitdata)
+            self.btn.clicked.connect(self.submitdata)
     
     def getminutes(self):
         self.Monday= self.txts[0].text()
@@ -121,13 +127,24 @@ class mainwindow(QWidget):
         print ('titleMon:'+self.monbooks+' Tues:  '+ self.tuesbooks+' Wed:  '+ self.wedbooks+' Thurs: '+self.thursbooks+' Friday: '+self.fribooks+' Sat: '+self.satbooks+' Sun: '+self.sunbooks)
         print ('pagesMon:'+self.monpages+' Tues:  '+ self.tuespages+' Wed:  '+ self.wedpages+' Thurs: '+self.thurspages+' Friday: '+self.fripages+' Sat: '+self.satpages+' Sun: '+self.sunpages)
 
+        minutesread=[]
+        for x in [self.Monday, self.Tuesday, self.Wednesday]:
+            if x.isdigit ():
+                minutesread.append(int(x))
+            else:
+                minutesread.append(0)
+        pagesread=[]
+        for x in [self.monpages, self.tuespages,self.wedpages]:
+            if x.isdigit ():
+                pagesread.append (int(x))
+            else:
+                pagesread.append(0)
 
-        minutesread = [int(self.Monday), int(self.Tuesday), int(self.Wednesday), int(self.Thursday), int(self.Friday), int(self.Saturday), int(self.Sunday)]
         booksread =[(self.monbooks),(self.tuesbooks),(self.wedbooks),(self.thursbooks),(self.fribooks),(self.satbooks),(self.sunbooks)]
-        pagesread=[int(self.monpages), int(self.tuespages),int(self.wedpages),int(self.thurspages),int(self.fripages), int(self.satpages),int(self.sunpages)]
         rl=readinglog(booksread, minutesread,pagesread)
         rl.savetofile ()
 
+        
 
 def main():
     app = QApplication(sys.argv)
