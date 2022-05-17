@@ -23,7 +23,7 @@ class mainwindow(QWidget):
                         '1. Read 5 out of 7 days for 6 weeks \n' 
                         '2. K-2nd = 20 min/day 5 days/ week \n'
                         '3. Record number of mninutes read and weekly totals on the calendar. \n'
-                        '4. Parent Signature at the bottom and signed form returned by Monday, March 28, 2022 \n')
+                        '4. Parent Signature at the bottom and signed form returned by Monday, March 28, 2022 \n ')
         label.move (5,5)
 
         label =QLabel(self)
@@ -50,11 +50,11 @@ class mainwindow(QWidget):
 
         label = QLabel(self)
         label.setFont(font)
-        label.setText('Pages')
+        label.setText(' Pages ')
         label.move(700, 100)
 
 
-        labels = ["Monday: ", "Tuesday: ","Wednesday: ","Thursday: ","Friday: ","Saturday: ","Sunday: "]
+        labels = [ " Monday: ", "Tuesday: ","Wednesday: ","Thursday: ","Friday: ","Saturday: ","Sunday: "]
         self.txts = []
         self.books =[]
         self.pages =[]
