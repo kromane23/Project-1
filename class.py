@@ -9,8 +9,8 @@ class Books:
     def pagecount (self):
         print (self.pages)
 
-Name= input ("What is the name of the book? ")
-Pages= input ('How many pages is this book? ')
+Name= input (" What is the name of the book? ")
+Pages= input (' How many pages is this book? ')
 
 b= Books(Name, Pages)
 
