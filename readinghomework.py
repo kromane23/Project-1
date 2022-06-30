@@ -1,7 +1,9 @@
+
+import pyodbc
 from calendar import TUESDAY
 import sys
 import os
-from turtle import onclick
+from turtle import onclick, title
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -91,6 +93,22 @@ class mainwindow(QWidget):
             self.btn.setText("Submit")
 
             self.btn.clicked.connect(self.submitdata)
+
+            self.txtfname = QLineEdit(self)
+            self.txtfname.resize (100,30)
+            self.txtfname.move(100,625)
+            label = QLabel(self)
+            label.setFont(font)
+            label.setText('First Name')
+            label.move(15,625)
+
+            self.txtlname = QLineEdit(self)
+            self.txtlname.resize (100,30)
+            self.txtlname.move(350,625)
+            label = QLabel(self)
+            label.setFont(font)
+            label.setText('Last Name')
+            label.move(250,625)
     
     def getminutes(self):
         self.Monday= self.txts[0].text()
@@ -119,7 +137,51 @@ class mainwindow(QWidget):
         self.satpages = self.pages [5].text ()
         self.sunpages =self.pages [6].text ()
 
+    def getcount (self,sql):
+        connect = 'DRIVER={MySQL ODBC 8.0 Unicode Driver}; SERVER=localhost; PORT=3306;DATABASE=readinglog; UID=root; PASSWORD=Cerulean051;'
+        db = pyodbc.connect(connect) 
+        crsr = db.cursor()
+        res = crsr.execute(sql)
+        row=crsr.fetchone()
+        return row.c
+
+
     def submitdata (self):
+        connect = 'DRIVER={MySQL ODBC 8.0 Unicode Driver}; SERVER=localhost; PORT=3306;DATABASE=readinglog; UID=root; PASSWORD=Cerulean051;'
+        db = pyodbc.connect(connect)
+        c=self.getcount("select count(*) as c from student where `first name` = '"+self.txtfname.text()+"' and `last name`= '"+self.txtlname.text ()+"'")
+        if c == 0:
+            sql = "insert into student (`first name`,`last name`) values ('"+ self.txtfname.text()+"','" +self.txtlname.text()+"')"
+            print (sql)
+            crsr = db.cursor()
+            res = crsr.execute(sql)
+        c=self.getcount("select count(*) as c from book where `title` = '"+self.books [0].text()+"'")
+        if c == 0:
+            sql= "insert into book (`title`) values ('"+self.books [0].text()+"')"
+            print (sql)
+            crsr = db.cursor()
+            res = crsr.execute(sql)
+
+        sql="select idstudent from `student` where `first name` ='"+ self.txtfname.text()+"' and `last name` = '"+ self.txtlname.text()+"' "
+        crsr = db.cursor()
+        res = crsr.execute(sql)
+        row = crsr.fetchone()
+        studentid=row.idstudent
+
+        sql= "select idbook from `book` where `title` = '" +self.books [0].text()+ "' "
+        crsr = db.cursor()
+        res = crsr.execute(sql)
+        row = crsr.fetchone()
+        bookid=row.idbook
+        
+        sql= "insert into relationship (`pages`,`idbook`,`minutesread`,`idname`) values ("+self.pages [0].text()+","+str(bookid)+","+self.txts[0].text()+","+str(studentid)+")"
+        print (sql)
+        crsr = db.cursor()
+        res = crsr.execute(sql)
+       
+
+        db.commit()
+        print (sql)
         self.getminutes ()
         self.getbooks ()
         self.getpages()
@@ -158,3 +220,7 @@ if __name__ == '__main__':
 onclick()
 rl=readinglog(booksread, minutesread,pagesread)
 rl.savetofile
+
+
+# select `id,` `first name`, `last name`, `grade`
+    # from student
